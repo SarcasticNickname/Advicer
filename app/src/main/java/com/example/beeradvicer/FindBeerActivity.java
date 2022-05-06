@@ -10,7 +10,11 @@ import android.widget.TextView;
 
 import org.w3c.dom.Text;
 
+import java.util.List;
+
 public class FindBeerActivity extends AppCompatActivity {
+
+    private final BeerExpert expert = new BeerExpert();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,7 +23,14 @@ public class FindBeerActivity extends AppCompatActivity {
     }
 
     public void onClickFindBeer(View view) {
-        TextView textView = (TextView) findViewById(R.id.brands);
-        Spinner spinner = (Spinner)findViewById(R.id.color);
+        TextView brands = (TextView) findViewById(R.id.brands);
+        Spinner color = (Spinner) findViewById(R.id.color);
+        String beerType = String.valueOf(color.getSelectedItem());
+        List<String> advicedBeers = expert.getBrands(beerType);
+        StringBuilder advice = new StringBuilder();
+        for (String advicedBeer : advicedBeers) {
+            advice.append(advicedBeer).append("\n");
+        }
+        brands.setText(advice.toString());
     }
 }
